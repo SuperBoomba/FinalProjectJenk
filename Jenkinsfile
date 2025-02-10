@@ -1,36 +1,50 @@
 pipeline {
     agent any
-
+    
+    // הגדרת הסטייג'ים של הפייפליין
     stages {
-        stage('Checkout SCM') {
+        stage('Checkout') {
             steps {
-                git 'https://github.com/SuperBoomba/FinalProjectJenk.git'
+                // שלב של קבלת הקוד מ-GitHub
+                git branch: 'main', url: 'https://github.com/SuperBoomba/FinalProjectJenk.git'
             }
         }
         
-        stage('Run PowerShell Script') {
+        stage('Build') {
             steps {
-                powershell '''
-                    # סקריפט PowerShell שלך כאן
-                    echo "<html><head><title>Welcome Page</title></head><body><h1>Hello, Guest!</h1><p>Welcome to the Jenkins-generated HTML page.</p></body></html>" > output.html
-                '''
+                // כאן תוכל להוסיף את הפקודות לבניית הפרויקט שלך
+                echo 'Building the project...'
+                // לדוגמה, אם מדובר בפרויקט Java:
+                // sh 'mvn clean install'
             }
         }
-
-        stage('List Files') {
+        
+        stage('Test') {
             steps {
-                powershell 'dir'  // מציג את רשימת הקבצים בתיקייה
+                // כאן תוכל להוסיף את הפקודות להרצת הבדיקות שלך
+                echo 'Running tests...'
+                // לדוגמה:
+                // sh 'mvn test'
             }
         }
-
-        stage('Publish HTML Report') {
+        
+        stage('Deploy') {
             steps {
-                publishHTML(target: [
-                    reportName: 'HTML Report',
-                    reportDir: '.',
-                    reportFiles: 'output.html'
-                ])
+                // כאן תוכל להוסיף את הפקודות לפריסת הפרויקט
+                echo 'Deploying the project...'
+                // לדוגמה:
+                // sh './deploy.sh'
             }
+        }
+    }
+    
+    // ניתן להוסיף כאן post-actions אם יש צורך, למשל שליחת מיילים או הודעות.
+    post {
+        success {
+            echo 'The pipeline has finished successfully!'
+        }
+        failure {
+            echo 'The pipeline has failed.'
         }
     }
 }
