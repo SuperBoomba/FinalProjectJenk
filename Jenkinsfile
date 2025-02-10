@@ -16,5 +16,13 @@ pipeline {
                 """
             }
         }
+        stage('Show HTML Output') {
+            steps {
+                powershell script: """
+                    Get-Content output.html | Out-String
+                """
+            }
+        }
+
     }
 }
