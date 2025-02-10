@@ -25,4 +25,15 @@ pipeline {
         }
 
     }
+    stage('Publish HTML Report') {
+    steps {
+        publishHTML(target: [
+            reportDir: '.', // התיקייה שבה ה-HTML נמצא
+            reportFiles: 'output.html', // שם קובץ ה-HTML
+            reportName: 'Generated HTML Report', // שם הכפתור שיופיע ב-Jenkins
+            keepAll: true, // שמירת דוחות מכל הבניות
+            alwaysLinkToLastBuild: true // תמיד להציג את הדוח האחרון
+        ])
+    }
+}
 }
