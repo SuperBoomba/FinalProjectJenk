@@ -15,8 +15,9 @@ pipeline {
             steps {
                 echo 'Building the project...'
                 powershell '''
-                    $UserName = "JenkinsUser"
-                    ./YourScript.ps1 $UserName
+                    $htmlContent = "<html><body>Welcome to Jenkins!</body></html>"
+                    # בצע את שאר הפעולות שלך עם המשתנה
+                    $htmlContent
                 '''
             }
         }
@@ -24,7 +25,9 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying the project...'
-                powershell '''Move-Item -Path output.html -Destination C:\\inetpub\\wwwroot\\index.html -Force'''
+                powershell '''
+                    Move-Item -Path output.html -Destination C:\\inetpub\\wwwroot\\index.html -Force
+                '''
             }
         }
     }
@@ -32,7 +35,7 @@ pipeline {
     post {
         success {
             echo 'The pipeline has finished successfully!'
-
+            // פרסום דוח ה-HTML
             publishHTML(target: [
                 reportName: 'My HTML Report',
                 reportDir: 'C:\\inetpub\\wwwroot',  // נתיב לתיקיית הדוח
