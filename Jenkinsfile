@@ -15,7 +15,10 @@ pipeline {
             steps {
                 echo 'Building the project...'
                 // הפעלת הסקריפט PowerShell
-                powershell '''./YourScript.ps1 -UserName "JenkinsUser"'''
+                powershell '''
+                    $UserName = "JenkinsUser"
+                    ./YourScript.ps1 $UserName
+                '''
             }
         }
         

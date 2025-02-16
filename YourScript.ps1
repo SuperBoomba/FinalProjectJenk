@@ -1,6 +1,5 @@
-param (
-    [string]$UserName
-)
+
+$UserName = $args[0]  # נקבל את המשתנה הראשון משורת הפקודה
 
 $htmlContent = @"
 <html>
