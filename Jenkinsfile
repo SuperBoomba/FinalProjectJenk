@@ -43,9 +43,10 @@ pipeline {
             echo 'The pipeline has failed.'
         }
     }
-    node {
+    
     stage('Send Notification') {
-        bat 'powershell -Command "msg * ג׳נקינס: המשימה הסתיימה בהצלחה!"'
+        steps {
+            bat 'powershell -Command "msg * ג׳נקינס: המשימה הסתיימה בהצלחה!"'
+        }
     }
-}
 }
