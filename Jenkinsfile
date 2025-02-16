@@ -14,7 +14,6 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building the project...'
-                // הפעלת הסקריפט PowerShell
                 powershell '''
                     $UserName = "JenkinsUser"
                     ./YourScript.ps1 $UserName
@@ -33,7 +32,7 @@ pipeline {
     post {
         success {
             echo 'The pipeline has finished successfully!'
-            // פרסום דוח ה-HTML
+
             publishHTML(target: [
                 reportName: 'My HTML Report',
                 reportDir: 'C:\\inetpub\\wwwroot',  // נתיב לתיקיית הדוח

@@ -1,5 +1,5 @@
 
-$UserName = $args[0]  # נקבל את המשתנה הראשון משורת הפקודה
+$UserName = $args[0] 
 
 $htmlContent = @"
 <html>
