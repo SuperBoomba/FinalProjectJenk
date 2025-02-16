@@ -13,20 +13,20 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building the project...'
-                powershell """
-                    \$htmlContent = '<html><body>Welcome to Jenkins!</body></html>'
+                powershell '''
+                    $htmlContent = '<html><body>Welcome to Jenkins!</body></html>'
                     # בצע את שאר הפעולות שלך עם המשתנה
-                    \$htmlContent
-                """
+                    Write-Output $htmlContent
+                '''
             }
         }
         
         stage('Deploy') {
             steps {
                 echo 'Deploying the project...'
-                powershell """
+                powershell '''
                     Move-Item -Path output.html -Destination C:\\inetpub\\wwwroot\\index.html -Force
-                """
+                '''
             }
         }
     }
