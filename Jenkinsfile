@@ -6,28 +6,27 @@ pipeline {
             steps {
                 checkout([$class: 'GitSCM', 
                     branches: [[name: '*/main']], 
-                    userRemoteConfigs: [[url: 'https://github.com/SuperBoomba/FinalProjectJenk.git']]
-                ])
+                    userRemoteConfigs: [[url: 'https://github.com/SuperBoomba/FinalProjectJenk.git']]])
             }
         }
         
         stage('Build') {
             steps {
                 echo 'Building the project...'
-                powershell '''
-                    $htmlContent = "<html><body>Welcome to Jenkins!</body></html>"
+                powershell """
+                    \$htmlContent = '<html><body>Welcome to Jenkins!</body></html>'
                     # בצע את שאר הפעולות שלך עם המשתנה
-                    $htmlContent
-                '''
+                    \$htmlContent
+                """
             }
         }
         
         stage('Deploy') {
             steps {
                 echo 'Deploying the project...'
-                powershell '''
+                powershell """
                     Move-Item -Path output.html -Destination C:\\inetpub\\wwwroot\\index.html -Force
-                '''
+                """
             }
         }
     }
