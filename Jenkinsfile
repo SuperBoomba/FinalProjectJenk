@@ -14,15 +14,15 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building the project...'
-                // הפעלת ה-PowerShell script
-                powershell './YourScript.ps1 -UserName "JenkinsUser"'
+                // הפעלת הסקריפט PowerShell
+                powershell '''./YourScript.ps1 -UserName "JenkinsUser"'''
             }
         }
         
         stage('Deploy') {
             steps {
                 echo 'Deploying the project...'
-                powershell 'Move-Item -Path output.html -Destination C:\\inetpub\\wwwroot\\index.html -Force'
+                powershell '''Move-Item -Path output.html -Destination C:\\inetpub\\wwwroot\\index.html -Force'''
             }
         }
     }
