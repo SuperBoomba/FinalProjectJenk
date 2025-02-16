@@ -1,6 +1,8 @@
 pipeline {
     agent any
-    
+    parameters {
+        string(name: 'UserName', defaultValue: 'Alon', description: 'Enter the username')
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -9,18 +11,17 @@ pipeline {
                     userRemoteConfigs: [[url: 'https://github.com/SuperBoomba/FinalProjectJenk.git']]])
             }
         }
-        
+
         stage('Build') {
             steps {
-                echo 'Building the project...'
-                powershell '''
-                    $htmlContent = '<html><body>Welcome to Jenkins!</body></html>'
-                    # בצע את שאר הפעולות שלך עם המשתנה
-                    Write-Output $htmlContent
-                '''
+                script {
+                    def user = params.UserName
+                    echo "Building the project for user: ${user}"
+                    powershell "powershell.exe -ExecutionPolicy Bypass -File YourScript.ps1 -UserName '${user}'"
+                }
             }
         }
-        
+
         stage('Deploy') {
             steps {
                 echo 'Deploying the project...'
@@ -34,7 +35,6 @@ pipeline {
     post {
         success {
             echo 'The pipeline has finished successfully!'
-            // פרסום דוח ה-HTML
             publishHTML(target: [
                 reportName: 'My HTML Report',
                 reportDir: 'C:\\inetpub\\wwwroot',  // נתיב לתיקיית הדוח
