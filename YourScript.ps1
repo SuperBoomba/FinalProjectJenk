@@ -1,14 +1,18 @@
-$UserName = $args[0] 
+param (
+    [string]$UserName
+)
 
-$htmlContent = "<html>
+$htmlContent = @"
+<html>
 <head>
     <title>Welcome Page</title>
 </head>
 <body>
-    <h1>Hello, {0}!</h1>
+    <h1>Hello, $UserName!</h1>
     <p>Welcome to the Jenkins-generated HTML page.</p>
 </body>
-</html>" -f $UserName
+</html>
+"@
 
 $outputPath = "output.html"
 $htmlContent | Out-File -FilePath $outputPath -Encoding UTF8
