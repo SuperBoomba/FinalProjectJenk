@@ -14,6 +14,7 @@ $htmlContent = @"
 </html>
 "@
 
-$outputPath = "output.html"
+$outputPath = "C:\\inetpub\\wwwroot\\index.html"
 $htmlContent | Out-File -FilePath $outputPath -Encoding UTF8
+
 Write-Output "HTML file has been generated at $outputPath"

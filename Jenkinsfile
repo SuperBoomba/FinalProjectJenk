@@ -8,19 +8,27 @@ pipeline {
             steps {
                 checkout([$class: 'GitSCM', 
                     branches: [[name: '*/main']], 
-                    userRemoteConfigs: [[url: 'https://github.com/SuperBoomba/FinalProjectJenk.git']]])
+                    userRemoteConfigs: [[url: 'https://github.com/SuperBoomba/FinalProjectJenk.git']]
+                ])
             }
         }
 
         stage('Run PowerShell Script') {
             steps {
                 script {
-                    // הגדרת המשתנה ב-Groovy
                     def user = params.UserName
-                    // שימוש במשתנה בצורה נכונה
-                    powershell "powershell.exe -ExecutionPolicy Bypass -File scripts/YourScript.ps1 -UserName '${user}'"
+                    powershell "powershell.exe -ExecutionPolicy Bypass -File YourScript.ps1 -UserName '${user}'"
                 }
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline finished successfully!'
+        }
+        failure {
+            echo 'Pipeline failed.'
         }
     }
 }
