@@ -8,8 +8,7 @@ pipeline {
             steps {
                 checkout([$class: 'GitSCM', 
                     branches: [[name: '*/main']], 
-                    userRemoteConfigs: [[url: 'https://github.com/SuperBoomba/FinalProjectJenk.git']]
-                ])
+                    userRemoteConfigs: [[url: 'https://github.com/SuperBoomba/FinalProjectJenk.git']])
             }
         }
 
@@ -17,18 +16,29 @@ pipeline {
             steps {
                 script {
                     def user = params.UserName
-                    powershell "powershell.exe -ExecutionPolicy Bypass -File YourScript.ps1 -UserName '${user}'"
+                    powershell """
+                    param (
+                        [string]$UserName
+                    )
+
+                    \$htmlContent = @"
+                    <html>
+                    <head>
+                        <title>Welcome Page</title>
+                    </head>
+                    <body>
+                        <h1>Hello, \$UserName!</h1>
+                        <p>Welcome to the Jenkins-generated HTML page.</p>
+                    </body>
+                    </html>
+                    "@
+
+                    \$outputPath = "output.html"
+                    \$htmlContent | Out-File -FilePath \$outputPath -Encoding UTF8
+                    Write-Output "HTML file has been generated at \$outputPath"
+                    """
                 }
             }
-        }
-    }
-
-    post {
-        success {
-            echo 'Pipeline finished successfully!'
-        }
-        failure {
-            echo 'Pipeline failed.'
         }
     }
 }
