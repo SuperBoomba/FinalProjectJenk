@@ -8,8 +8,7 @@ pipeline {
             steps {
                 checkout([$class: 'GitSCM', 
                     branches: [[name: '*/main']], 
-                    userRemoteConfigs: [[url: 'https://github.com/SuperBoomba/FinalProjectJenk.git']]
-                ])
+                    userRemoteConfigs: [[url: 'https://github.com/SuperBoomba/FinalProjectJenk.git']]])
             }
         }
 
@@ -17,7 +16,8 @@ pipeline {
             steps {
                 script {
                     def user = params.UserName
-                    powershell 'powershell.exe -ExecutionPolicy Bypass -File YourScript.ps1 -UserName "' + user + '"'
+                    // שימוש בתחביר נכון להכללת המשתנה ב-String
+                    powershell "powershell.exe -ExecutionPolicy Bypass -File scripts/YourScript.ps1 -UserName '${user}'"
                 }
             }
         }
